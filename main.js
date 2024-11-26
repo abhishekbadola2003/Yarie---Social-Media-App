@@ -1,10 +1,8 @@
-var fname = "abhi";
-console.log(fname);
-function sum(a, b) {
-    return a + b;
-}
-function sub(a, b) {
-    return a - b;
-}
-console.log(sum(3, 5));
-console.log(sub(5, 3));
+var first = {
+    num1: 5,
+    num2: 4,
+};
+var mul = function (first) {
+    return first.num1 * first.num2;
+};
+console.log(mul(first));

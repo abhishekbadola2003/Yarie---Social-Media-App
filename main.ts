@@ -1,20 +1,17 @@
 type person = {
-    name: string;
-    id: number;
-    employee: boolean;
-    class:string
+    num1:number,
+    num2:number,
+
 }
 
-const person1:person={
-    name: "abhi",
-    id:1,
-    employee:true,
-    class:"senior"
+const first:person={
+    num1:5,
+    num2:4,
 }
 
-const next:person={
-    name:"abhi",
-    employee:true,
-    id:2,
-    class:"junior"
+
+const mul=(first:person)=>{
+    return first.num1*first.num2;
+     
 }
+console.log(mul(first));
