@@ -15,12 +15,18 @@ app.use(
 );
 app.use(json());
 
+declare global {
+  interface CustomError extends Error {
+    status?: number;
+  }
+}
+
 const start = async () => {
   if (!process.env.MONGO_URI) throw new Error("MONGO_URI is required!");
   try {
     await mongoose.connect(process.env.MONGO_URI);
   } catch (err) {
-    throw new Error("database error!");
+    console.log("database error! " + err);
   }
 
   app.listen(7000, () => {

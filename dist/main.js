@@ -47,6 +47,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
 dotenv.config();
+console.log("MONGO_URI:", process.env.MONGO_URI);
 const express_1 = __importDefault(require("express"));
 const body_parser_1 = require("body-parser");
 const mongoose_1 = __importDefault(require("mongoose"));
@@ -62,7 +63,7 @@ const start = () => __awaiter(void 0, void 0, void 0, function* () {
         yield mongoose_1.default.connect(process.env.MONGO_URI);
     }
     catch (err) {
-        throw new Error("database error!");
+        console.log("database error!");
     }
     app.listen(7000, () => {
         console.log("Server has started running on port 7000");

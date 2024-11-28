@@ -4,7 +4,7 @@
   "main": "main.js",
   "scripts": {
     "compile": "tsc && node main.js",
-    "start": "nodemon -e ts --exec \"npm run compile\""
+    "start": "nodemon --exec ts-node main.ts"
   },
   "keywords": [],
   "author": "",
@@ -15,10 +15,12 @@
     "body-parser": "^1.20.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
+    "mongodb": "^6.11.0",
     "mongoose": "^8.8.3",
     "nodemon": "^3.1.7"
   },
   "devDependencies": {
-    "prettier": "3.4.1"
+    "prettier": "3.4.1",
+    "ts-node": "^10.9.2"
   }
 }
