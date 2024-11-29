@@ -1,4 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
+import posts from "../../routers/post";
 
 const router = Router();
 
@@ -12,6 +13,14 @@ router.post(
       error.status = 400;
       return next(error);
     }
+
+    const newPost = new posts({
+      title,
+      content,
+    });
+
+    await newPost.save();
+    res.status(201).send(newPost);
   }
 );
 
