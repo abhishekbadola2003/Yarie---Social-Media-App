@@ -12,7 +12,6 @@
   "description": "",
   "dependencies": {
     "@types/dotenv": "^8.2.3",
-    "@types/express": "^5.0.0",
     "body-parser": "^1.20.3",
     "dotenv": "^16.4.5",
     "express": "^4.21.1",
@@ -21,6 +20,7 @@
     "nodemon": "^3.1.7"
   },
   "devDependencies": {
+    "@types/express": "^5.0.0",
     "prettier": "3.4.1",
     "ts-node": "^10.9.2"
   }
