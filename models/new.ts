@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import posts from "../../routers/post";
+import post from "../../typesrcipt/models/routers/post/post";
 
 const router = Router();
 
@@ -14,7 +14,7 @@ router.post(
       return next(error);
     }
 
-    const newPost = new posts({
+    const newPost = new post({
       title,
       content,
     });
