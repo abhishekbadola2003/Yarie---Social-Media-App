@@ -25,10 +25,9 @@
     "sourceRoot": "/"
   },
   "exclude": ["./node_modules/*/", "./build/*/"],
-  "include": ["global.d.ts"],
-  "compilerOptions": {
-    "resolveJsonModule": true
-  },
+  "include": ["src/global.d.tsers/post/global.d.ts"],
+
+  "resolveJsonModule": true,
 
   "ts-node": {
     "swc": false
