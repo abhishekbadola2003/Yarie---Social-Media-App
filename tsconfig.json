@@ -25,7 +25,8 @@
     "sourceRoot": "/"
   },
   "exclude": ["./node_modules/*/", "./build/*/"],
-  "include": ["./src/*/"],
+  "include": ["global.d.ts"],
+
   "ts-node": {
     "swc": false
   },
