@@ -26,6 +26,9 @@
   },
   "exclude": ["./node_modules/*/", "./build/*/"],
   "include": ["global.d.ts"],
+  "compilerOptions": {
+    "resolveJsonModule": true
+  },
 
   "ts-node": {
     "swc": false

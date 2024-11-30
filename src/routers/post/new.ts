@@ -1,7 +1,8 @@
 import { Router } from "express";
 import { Response, Request, NextFunction, ErrorRequestHandler } from "express";
-import Post from "./post";
+import Post from "../../../src/models/post";
 import { error } from "console";
+
 const router = Router();
 
 router.delete(
