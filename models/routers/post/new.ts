@@ -4,19 +4,22 @@ import Post from "./post";
 import { error } from "console";
 const router = Router();
 
-router.post(
+router.delete(
   "./api/post/show/:id",
   async (req: Request, res: Response, next: NextFunction) => {
-    const { id } = req.body;
+    try {
+      const { id } = req.body;
 
-    if (!id) {
-      const allPost = await Post.find();
-      return res.status(200).send(allPost);
+      if (!id) {
+        const error = new Error("post id is required!") as CustomError;
+      }
+
+      await Post.findOne({ _id: id });
+    } catch (err) {
+      next(new Error("Post cannot be showed."));
     }
 
-    const post = await Post.findOne({ _id: id }).populate("comments");
-
-    res.status(200).send(post);
+    res.status(200).json({ success: true });
   }
 );
 export { router as showPostRouter };
