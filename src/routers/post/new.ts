@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { Response, Request, NextFunction, ErrorRequestHandler } from "express";
-import Post from "../../../src/models/post";
+import Post from "../../models/post";
 import { error } from "console";
 
 const router = Router();
@@ -23,4 +23,4 @@ router.delete(
     res.status(200).json({ success: true });
   }
 );
-export { router as showPostRouter };
+export { router as newPostRouter };

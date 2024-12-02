@@ -1,5 +1,5 @@
 import { NextFunction, Router, Request, Response } from "express";
-import Post from "./post";
+import Post from "../../models/post";
 import { nextTick } from "process";
 
 const router = Router();
@@ -33,4 +33,4 @@ router.post(
   }
 );
 
-export { router };
+export { router as updatePostRouter };
