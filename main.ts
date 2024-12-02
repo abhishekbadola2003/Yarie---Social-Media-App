@@ -10,12 +10,6 @@ import express, {
 } from "express";
 import { json, urlencoded } from "body-parser";
 import mongoose from "mongoose";
-import {
-  NewCommentRouter,
-  showPostRouter,
-  deletePostRouter,
-  updatePostRouter,
-} from "./src/routers";
 
 const app = express();
 
