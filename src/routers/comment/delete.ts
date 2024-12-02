@@ -1,14 +1,8 @@
+import { Router, Request, Response, NextFunction } from "express";
 import { error } from "console";
 import Comment from "../../models/comment";
-import {
-  NextFunction,
-  Express,
-  RequestHandler,
-  Request,
-  Router,
-  response,
-  ErrorRequestHandler,
-} from "express";
+import { Express, RequestHandler, ErrorRequestHandler } from "express";
+import Post from "../../models/post";
 
 const router = Router();
 
@@ -30,5 +24,14 @@ router.post(
     } catch (err) {
       next(new error("Comment cannot be updated."));
     }
+
+    await Post.findOneAndUpdate(
+      { _id: postId },
+      { $pull: { comments: commentid } }
+    );
+
+    res.status(200).json({ success: true });
   }
 );
+
+export { router as deleteCommentRouter };
