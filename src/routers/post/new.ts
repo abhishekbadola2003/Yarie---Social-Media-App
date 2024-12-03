@@ -1,12 +1,5 @@
-import {
-  Router,
-  Request,
-  Response,
-  NextFunction,
-  ErrorRequestHandler,
-} from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import Post from "../models/post";
-import { error } from "console";
 
 const router = Router();
 
@@ -14,10 +7,9 @@ router.post(
   "/api/post/new",
   async (req: Request, res: Response, next: NextFunction) => {
     const { title, content } = req.body;
-    console.log(req.body);
 
     if (!title || !content) {
-      const error = new Error("title and content are required") as CustomError;
+      const error = new Error("title and content are required!") as CustomError;
       error.status = 400;
       return next(error);
     }
@@ -32,4 +24,5 @@ router.post(
     res.status(201).send(newPost);
   }
 );
+
 export { router as newPostRouter };

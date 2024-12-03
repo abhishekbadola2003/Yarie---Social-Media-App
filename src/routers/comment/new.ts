@@ -12,7 +12,8 @@ router.post(
     const postId = req.params;
 
     if (!Content) {
-      const Error = new error("no content written", 400) as CustomError;
+      const error = new Error("no content written") as CustomError;
+      error.status = 400;
       return next(error);
     }
 
