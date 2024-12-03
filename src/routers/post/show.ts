@@ -14,7 +14,7 @@ router.get(
       return;
     }
 
-    const post = await Post.findOne({ _id: id });
+    const post = await Post.findOne({ _id: id }).populate("comments");
 
     if (!post) {
       res.status(404).json({ message: "Post not found" });
