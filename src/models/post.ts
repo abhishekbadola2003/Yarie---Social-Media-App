@@ -3,11 +3,11 @@ import mongoose from "mongoose";
 const postSchema = new mongoose.Schema({
   title: {
     type: String,
-    require: true,
+    required: true,
   },
   content: {
     type: String,
-    require: true,
+    required: true,
   },
   comments: [
     {
@@ -17,6 +17,6 @@ const postSchema = new mongoose.Schema({
   ],
 });
 
-const Post = mongoose.models["Post"] || mongoose.model("Post", postSchema);
+const Post = mongoose.models.Post || mongoose.model("Post", postSchema);
 
 export default Post;
