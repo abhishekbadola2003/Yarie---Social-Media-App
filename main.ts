@@ -19,6 +19,7 @@ import {
   NewCommentRouter,
   updatePostRouter,
 } from "./src";
+
 import { nextTick } from "process";
 
 const app = express();
@@ -55,3 +56,7 @@ declare global {
     status?: number;
   }
 }
+
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});

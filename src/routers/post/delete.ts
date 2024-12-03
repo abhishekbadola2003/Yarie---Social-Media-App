@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { Response, Request, NextFunction, ErrorRequestHandler } from "express";
-import Post from "../../../src/models/post";
+import Post from "../../models/post";
 import { error } from "console";
 
 const router = Router();
 
 router.delete(
-  "./api/post/delete/:id",
+  "/api/post/delete/:id",
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 

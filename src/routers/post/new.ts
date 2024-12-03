@@ -6,7 +6,7 @@ import { error } from "console";
 const router = Router();
 
 router.delete(
-  "./api/post/show/:id",
+  "/api/post/new",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.body;
