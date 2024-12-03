@@ -16,7 +16,7 @@ const postSchema = new mongoose.Schema({
     },
   ],
 });
-
+console.log("Compiling Post model...");
 const Post = mongoose.models.Post || mongoose.model("Post", postSchema);
 
 export default Post;
