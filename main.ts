@@ -18,7 +18,7 @@ import {
   showPostRouter,
   NewCommentRouter,
   updatePostRouter,
-} from "./src";
+} from "./src/routers";
 
 import { nextTick } from "process";
 
@@ -51,12 +51,12 @@ app.all("*", (req, res, next) => {
   next(error);
 });
 
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});
+
 declare global {
   interface CustomError extends Error {
     status?: number;
   }
 }
-
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
-});

@@ -1,12 +1,12 @@
 import { Router } from "express";
 import { Response, Request, NextFunction, ErrorRequestHandler } from "express";
-import Comment from "../../models/comment";
+import Comment from "../models/comment";
 import { error } from "console";
-import Post from "../../models/post";
+import Post from "../models/post";
 const router = Router();
 
 router.post(
-  "/api/comment/new",
+  "/api/comment/new/:postId",
   async (req: Request, res: Response, next: NextFunction) => {
     const { userName, Content } = req.body;
     const postId = req.params;
