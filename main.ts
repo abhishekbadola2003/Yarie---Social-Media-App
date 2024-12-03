@@ -18,7 +18,7 @@ import {
   showPostRouter,
   NewCommentRouter,
   updatePostRouter,
-} from "./src/routers";
+} from "./src";
 import { nextTick } from "process";
 
 const app = express();
