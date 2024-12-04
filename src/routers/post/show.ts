@@ -14,7 +14,7 @@ router.get(
       return;
     }
 
-    const post = await Post.findOne({ _id: id }).populate("Comment");
+    const post = await Post.findOne({ _id: id }).populate("comment");
 
     res.status(200).send(post);
   }
