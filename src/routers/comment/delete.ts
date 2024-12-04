@@ -20,9 +20,11 @@ router.post(
     }
 
     try {
-      await Comment.findOneAndDelete({ _id: commentid });
+      await Post.findOneAndDelete({ _id: commentid });
     } catch (err) {
-      next(new error("Comment cannot be updated."));
+      const error = new Error("Post cannot be updated.") as CustomError;
+      error.status = 500;
+      return next(error);
     }
 
     await Post.findOneAndUpdate(
