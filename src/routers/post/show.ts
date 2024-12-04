@@ -5,23 +5,18 @@ const router = Router();
 
 router.get(
   "/api/post/show/:id",
-  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
     if (!id) {
       const allPosts = await Post.find();
-      res.status(200).json(allPosts);
+      res.status(200).send(allPosts);
       return;
     }
 
-    const post = await Post.findOne({ _id: id });
+    const post = await Post.findOne({ _id: id }).populate("Comment");
 
-    if (!post) {
-      res.status(404).json({ message: "Post not found" });
-      return;
-    }
-
-    res.status(200).json(post);
+    res.status(200).send(post);
   }
 );
 
