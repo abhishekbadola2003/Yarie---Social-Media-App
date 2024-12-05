@@ -8,7 +8,6 @@ router.post(
   "/api/post/update/:id",
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    let updatedPost;
 
     const { content, title } = req.body;
 
@@ -17,6 +16,7 @@ router.post(
       error.status = 400;
       next(error);
     }
+    let updatedPost;
 
     try {
       const updatedPost = await Post.findOneAndUpdate(

@@ -1,8 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { error } from "console";
-import Comment from "../models/comment";
-import { Express, RequestHandler, ErrorRequestHandler } from "express";
-// import Post from "../../models/post";
+
 import Post from "../models/post";
 const router = Router();
 

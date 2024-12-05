@@ -1,6 +1,7 @@
 import { Request, Response, Router, NextFunction } from "express";
 import { User } from "./user";
-
+import { Jwt } from "jsonwebtoken";
+import { Authenticationservice } from "common/src/services/authentication";
 const router = Router();
 
 router.post(
@@ -13,15 +14,17 @@ router.post(
     if (!User) {
       return next(new Error("user doesn't exist create new."));
     }
-    console.log("Create a new account.");
 
-    if (user) return new Error("user with the same credentials already exists");
+    const isEqual = await Authenticationservice.Pwdcompare(
+      user.password,
+      password
+    );
+    if (!isEqual) return next(new Error("wrong credentials"));
 
-    const newUser = new User({
+    const token = jwt.sign({
       email,
-      password,
+      userId: user,
+      _id,
     });
-
-    res.status(201).send(newUser);
   }
 );
