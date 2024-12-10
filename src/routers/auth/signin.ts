@@ -1,30 +1,25 @@
-import { Request, Response, Router, NextFunction } from "express";
-import { User } from "./user";
-import { Jwt } from "jsonwebtoken";
-import { Authenticationservice } from "common/src/services/authentication";
-const router = Router();
+import { Router, Request, Response, NextFunction } from 'express'
+import { User } from '../../models/user'
+import { authenticationService, BadRequestError } from '../../../common'
+import jwt from 'jsonwebtoken'
 
-router.post(
-  "/signin",
-  async (req: Request, res: Response, next: NextFunction) => {
+const router = Router()
+
+router.post('/signin', async (req: Request, res: Response, next: NextFunction) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
+    if(!user) return next(new BadRequestError('wrong credentials'))
 
-    if (!User) {
-      return next(new Error("user doesn't exist create new."));
-    }
+    const isEqual = await authenticationService.pwdCompare(user.password, password);
+    if(!isEqual) return next(new BadRequestError('wrong credentials'))
 
-    const isEqual = await Authenticationservice.Pwdcompare(
-      user.password,
-      password
-    );
-    if (!isEqual) return next(new Error("wrong credentials"));
+    const token = jwt.sign({ email, userId: user._id }, process.env.JWT_KEY!, { expiresIn: '10h' })
 
-    const token = jwt.sign({
-      email,
-      userId: user,
-      _id,
-    });
-  }
-);
+    req.session = { jwt: token }
+
+    res.status(200).send(user)
+
+})
+
+export { router as signinRouter }

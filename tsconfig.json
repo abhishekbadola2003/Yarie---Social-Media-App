@@ -1,3 +1,46 @@
+{
+  "compilerOptions": {
+    "lib": ["es2018", "es5", "dom"],
+    "typeRoots": ["node_modules/@types", "common/src/typestypes"],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "target": "ES2017",
+    "strict": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "./build",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "inlineSources": true,
+    "baseUrl": "./",
+    "paths": {
+      "*": ["node_modules/*"]
+    },
+    // Set sourceRoot to  "/" to strip the build path prefix
+    // from generated source code references.
+    // This improves issue grouping in Sentry.
+    "sourceRoot": "/"
+  },
+  "exclude": ["./node_modules/*/", "./build/*/"],
+  "include": ["common/src/global.d.tsers/post/global.d.tsal.d.ts"],
+
+  "resolveJsonModule": true,
+
+  "ts-node": {
+    "swc": false
+  },
+  "files": ["common/src/types/index.d.tsex.d.ts"],
+
+  "module": "commonjs",
+  "target": "ES6",
+  "esModuleInterop": true,
+  "strict": true,
+  "skipLibCheck": true
+}
+
 // {
 //   "compilerOptions": {
 //     /* Visit https://aka.ms/tsconfig.json to read more about this file */
@@ -90,46 +133,3 @@
 //     "skipLibCheck": true /* Skip type checking all .d.ts files. */
 //   }
 // }
-
-{
-  "compilerOptions": {
-    "lib": ["es2018", "es5", "dom"],
-    "typeRoots": ["node_modules/@types", "./src/types"],
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "target": "ES2017",
-    "strict": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "outDir": "./build",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "declaration": true,
-    "sourceMap": true,
-    "noImplicitAny": false,
-    "inlineSources": true,
-    "baseUrl": "./",
-    "paths": {
-      "*": ["node_modules/*"]
-    },
-    // Set sourceRoot to  "/" to strip the build path prefix
-    // from generated source code references.
-    // This improves issue grouping in Sentry.
-    "sourceRoot": "/"
-  },
-  "exclude": ["./node_modules/*/", "./build/*/"],
-  "include": ["src/global.d.tsers/post/global.d.ts"],
-
-  "resolveJsonModule": true,
-
-  "ts-node": {
-    "swc": false
-  },
-  "files": ["src/types/index.d.ts"],
-
-  "module": "commonjs",
-  "target": "ES6",
-  "esModuleInterop": true,
-  "strict": true,
-  "skipLibCheck": true
-}

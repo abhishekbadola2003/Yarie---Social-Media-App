@@ -22,8 +22,13 @@ import {
 } from "./src/routers";
 
 import { nextTick } from "process";
-import { requireAuth } from "./";
-import { currentUser } from "./common/src/services";
+// import { requireAuth } from "./common/src/middlewares/req-auth";
+import {
+  requireAuth,
+  currentUser,
+  errorHandler,
+  NotFoundError,
+} from "./common/src/services";
 
 const app = express();
 
@@ -60,16 +65,10 @@ app.use(showPostRouter);
 app.use(NewCommentRouter);
 
 app.all("*", (req, res, next) => {
-  const error = new Error("not found!") as CustomError;
-  error.status = 404;
-  next(error);
+  next(new NotFoundError());
 });
 
-declare global {
-  interface CustomError extends Error {
-    status?: number;
-  }
-}
+app.use(errorHandler);
 
 app.use((error: CustomError, req: Request, res: Response) => {
   if (error.status) {

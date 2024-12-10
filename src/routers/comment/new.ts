@@ -1,36 +1,32 @@
-import { Router } from "express";
-import { Response, Request, NextFunction, ErrorRequestHandler } from "express";
-import Comment from "../models/comment";
-import { error } from "console";
-import Post from "../models/post";
-const router = Router();
+import { Router, Request, Response, NextFunction } from "express";
+import Comment from '../../models/comment'
+import Post from '../../models/post'
+import { BadRequestError } from '../../../common'
 
-router.post(
-  "/api/comment/new/:postId",
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { userName, Content } = req.body;
-    const postId = req.params;
+const router = Router()
 
-    if (!Content) {
-      const error = new Error("no content written") as CustomError;
-      error.status = 400;
-      return next(error);
+router.post('/api/comment/new/:postId', async (req: Request, res: Response, next: NextFunction) => {
+    const { userName, content } = req.body;
+    const { postId } = req.params;
+
+    if(!content) {
+        return next(new BadRequestError('content is required!'));
     }
 
-    const NewComment = new Comment({
-      userName: userName ? userName : "Anonymous",
+    const newComment = Comment.build({
+        userName: userName ? userName : 'anonymous',
+        content
     });
 
-    await NewComment.save();
+    await newComment.save()
 
     const updatedPost = await Post.findOneAndUpdate(
-      { _id: postId },
-      { $push: { comments: NewComment } },
-      { new: true }
-    );
+        { _id: postId },
+        { $push: { comments: newComment } },
+        { new: true }
+    )
 
-    res.status(201).send(updatedPost);
-  }
-);
+    res.status(201).send(updatedPost)
+})
 
-export { router as NewCommentRouter };
+export { router as newCommentRouter }

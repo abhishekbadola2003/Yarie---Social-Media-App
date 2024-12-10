@@ -1,28 +1,32 @@
 import { Router, Request, Response, NextFunction } from "express";
-import Post from "../models/post";
+import Post from '../../models/post'
+import { User } from '../../models/user'
+import { BadRequestError, uploadImages } from '../../../common/'
+import fs from 'fs';
+import path from 'path'
 
-const router = Router();
+const router = Router()
 
-router.post(
-  "/api/post/new",
-  async (req: Request, res: Response, next: NextFunction) => {
+router.post('/api/post/new', uploadImages, async (req: Request, res: Response, next: NextFunction) => {
     const { title, content } = req.body;
 
-    if (!title || !content) {
-      const error = new Error("title and content are required!") as CustomError;
-      error.status = 400;
-      return next(error);
+    if(!title || !content) {
+        return next(new BadRequestError('title and content are required!'))
     }
 
-    const newPost = new Post({
-      title,
-      content,
+    const newPost = Post.build({
+        title,
+        content,
+        
+        })
     });
 
-    await newPost.save();
+    await newPost.save()
 
-    res.status(201).send(newPost);
-  }
-);
+    await User.findOneAndUpdate({ _id: req.currentUser!.userId }, 
+        { $push: { posts: newPost._id } })
 
-export { router as newPostRouter };
+    res.status(201).send(newPost)
+})
+
+export { router as newPostRouter }

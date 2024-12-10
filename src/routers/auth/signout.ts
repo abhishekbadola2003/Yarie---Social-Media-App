@@ -1,13 +1,10 @@
-import { Router, Response, NextFunction, Request } from "express";
+import { Router, Response, NextFunction ,Request } from 'express'
 
-const router = Router();
+const router = Router()
 
-router.get(
-  "/signout",
-  async (req: Request, res: Response, next: NextFunction) => {
-    req.session = null;
-    res.send({});
-  }
-);
+router.post('/signout', async (req: Request, res: Response, next: NextFunction) => {
+    req.session = null
+    res.send({})
+})
 
-export { router as signoutRouter };
+export { router as signoutRouter }

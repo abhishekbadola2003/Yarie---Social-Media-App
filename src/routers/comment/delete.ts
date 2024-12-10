@@ -1,36 +1,28 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Response, Request, NextFunction } from 'express'
+import Post from '../../models/post'
+import Comment from '../../models/comment'
+import { BadRequestError } from '../../../common'
 
-import Post from "../models/post";
-const router = Router();
+const router = Router()
 
-router.post(
-  "/api/comment/:commentid/delete/:postId",
-  async (req: Request, res: Response, next: NextFunction) => {
-    const { postId, commentid } = req.params;
+router.delete('/api/comment/:commentId/delete/:postId', async (req: Request, res: Response, next: NextFunction) => {
+    const { postId, commentId } = req.params;
 
-    if (!commentid || !postId) {
-      const customError = new Error(
-        "commentid or postid is missing"
-      ) as CustomError;
-      customError.status = 400;
-      return next(customError);
+    if(!commentId || !postId) {
+        return next(new BadRequestError('post id and comment id are required!'))
     }
 
     try {
-      await Post.findOneAndDelete({ _id: commentid });
-    } catch (err) {
-      const error = new Error("Post cannot be updated.") as CustomError;
-      error.status = 500;
-      return next(error);
+        await Comment.findOneAndRemove({ _id: commentId })
+    } catch(err) {
+        next(new Error('comment cannot be updated!'))
     }
 
-    await Post.findOneAndUpdate(
-      { _id: postId },
-      { $pull: { comments: commentid } }
-    );
+    const post = await Post.findOneAndUpdate({ _id: postId }, { $pull: { comments: commentId } }, { new: true })
 
-    res.status(200).json({ success: true });
-  }
-);
+    if(!post) return next(new Error())
 
-export { router as deleteCommentRouter };
+    res.status(200).send(post)
+})
+
+export { router as deleteCommentRouter }

@@ -1,20 +1,18 @@
-import { Router, Request, Response, NextFunction } from "express";
-import Post from "../models/post";
-
+import { Router, Response, Request, NextFunction } from "express";
+import Post from "../../models/post";
 const router = Router();
 
-router.get(
-  "/api/post/show/:id",
+router.post(
+  "/api/post/show/",
   async (req: Request, res: Response, next: NextFunction) => {
-    const { id } = req.params;
+    const { id } = req.body;
 
     if (!id) {
       const allPosts = await Post.find();
-      res.status(200).send(allPosts);
-      return;
+      return res.status(200).send(allPosts);
     }
 
-    const post = await Post.findOne({ _id: id }).populate("comment");
+    const post = await Post.findOne({ _id: id }).populate("comments");
 
     res.status(200).send(post);
   }
