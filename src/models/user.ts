@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Authenticationservice } from "../../common/src/errors";
+import { Authenticationservice } from "../../common/src";
 import { PostDoc } from "./post";
 
 export interface UserDoc extends mongoose.Document {

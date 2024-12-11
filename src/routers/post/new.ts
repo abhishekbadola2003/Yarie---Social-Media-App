@@ -1,8 +1,9 @@
 import { Router, Request, Response, NextFunction } from "express";
 import Post from "../../models/post";
 import { User } from "../../models/user";
-import { BadRequestError, uploadImages } from "../../../common/src/errors";
+import { BadRequestError, uploadImages } from "../../../common/src";
 import fs from "fs";
+// import { requireAuth } from "../../../common/src/middlewares/req-auth"
 import path from "path";
 
 const router = Router();
@@ -26,16 +27,16 @@ router.post(
       return next(new BadRequestError("title and content are required!"));
     }
 
-      
-      const newPost = Post.build({
-          title,
-          content,
-          images: images = images.map((file: Express.Multer.File) => {
-              let srcObj = { src: 'data:${file.mimetype};base64,${file.buffer.toString('base64')'}
-              fs.unlink(path.join('/upload/' + file.filename), ()=>{})
-            return srcObj
-      })
-,
+    const newPost = Post.build({
+      title,
+      content,
+      images: images.map((file: Express.Multer.File) => {
+        let srcObj = {
+          src: `data:${file.mimetype};base64,${file.buffer.toString("base64")}`,
+        };
+        fs.unlink(path.join("/upload/" + file.filename), () => {});
+        return srcObj;
+      }),
     });
 
     await newPost.save();

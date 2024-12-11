@@ -10,6 +10,8 @@ import {
   deletePostRouter,
   updatePostRouter,
   showPostRouter,
+  addImagesRouter,
+  deleteImagesRouter,
   newCommentRouter,
   deleteCommentRouter,
   signinRouter,
@@ -22,7 +24,7 @@ import {
   currentUser,
   errorHandler,
   NotFoundError,
-} from "../common";
+} from "../common/src";
 
 const app = express();
 
@@ -48,20 +50,24 @@ app.use(
   })
 );
 
+app.use(currentUser);
+
 app.use(signupRouter);
 app.use(signinRouter);
 app.use(currentUser);
 app.use(currentUserRouter);
 app.use(signoutRouter);
 
-app.use(newPostRouter);
-app.use(deletePostRouter);
-app.use(updatePostRouter);
+app.use(requireAuth, newPostRouter);
+app.use(requireAuth, deletePostRouter);
+app.use(requireAuth, updatePostRouter);
+app.use(requireAuth, addImagesRouter);
+app.use(requireAuth, deleteImagesRouter);
 
 app.use(showPostRouter);
 
-app.use(newCommentRouter);
-app.use(deleteCommentRouter);
+app.use(requireAuth, newCommentRouter);
+app.use(requireAuth, deleteCommentRouter);
 
 app.all("*", (req, res, next) => {
   next(new NotFoundError());
