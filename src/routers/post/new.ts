@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import Post from "../../models/post";
 import { User } from "../../models/user";
-import { BadRequestError, uploadImages } from "../../../common/";
+import { BadRequestError, uploadImages } from "../../../common/src/errors";
 import fs from "fs";
 import path from "path";
 
@@ -31,8 +31,8 @@ router.post(
           title,
           content,
           images: images = images.map((file: Express.Multer.File) => {
-              let srcObj = { src: 'data:${file.mimetype};base64,${file.buffer.toString('base64')}'
-          }
+              let srcObj = { src: 'data:${file.mimetype};base64,${file.buffer.toString('base64')'}
+              fs.unlink(path.join('/upload/' + file.filename), ()=>{})
             return srcObj
       })
 ,
