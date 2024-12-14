@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Authenticationservice } from "../../common/src";
+import { authenticationService } from "../../common";
 import { PostDoc } from "./post";
 
 export interface UserDoc extends mongoose.Document {
@@ -37,7 +37,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("save", async function (done) {
   if (this.isModified("password") || this.isNew) {
-    const hashedPwd = Authenticationservice.pwdToHash(this.get("password"));
+    const hashedPwd = authenticationService.pwdToHash(this.get("password"));
     this.set("password", hashedPwd);
   }
 

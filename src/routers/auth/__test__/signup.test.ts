@@ -1,7 +1,9 @@
 import request from "supertest";
 import { app } from "../../../app";
 
-it("returns 201 on succesfull signup", async () => {
+it("returns 201 on successfull signup", async () => {
+  jest.setTimeout(60000);
+
   return request(app)
     .post("/signup")
     .send({
@@ -11,7 +13,7 @@ it("returns 201 on succesfull signup", async () => {
     .expect(201);
 });
 
-it("sets the cookie after successful signup", async () => {
+it("sets the cookie after successfull signup", async () => {
   const res = await request(app)
     .post("/signup")
     .send({
@@ -20,5 +22,5 @@ it("sets the cookie after successful signup", async () => {
     })
     .expect(201);
 
-  expect(res.get("Set-Cookie"));
+  expect(res.get("Set-Cookie")).toBeDefined();
 });

@@ -7,11 +7,12 @@ router.post(
   "/post/:id/delete/images",
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const { imageIds } = req.body;
+    const { imagesIds } = req.body;
 
     const post = await Post.findOneAndUpdate(
       { _id: id },
-      { pull: { images: { _id: { $in: imageIds } } } }
+      { $pull: { images: { _id: { $in: imagesIds } } } },
+      { new: true }
     );
 
     res.status(200).send(post);

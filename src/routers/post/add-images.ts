@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import Post from "../../models/post";
-import { BadRequestError, uploadImages } from "../../../common/src";
+import { BadRequestError, uploadImages } from "../../../common/";
 import fs from "fs";
 import path from "path";
 
@@ -11,12 +11,12 @@ router.post(
   uploadImages,
   async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
-    const { imageIds } = req.body;
 
-    if (!req.files) return next(new BadRequestError("images are required."));
+    if (!req.files) return next(new BadRequestError("images are required"));
 
     let images: Array<Express.Multer.File>;
-    if (typeof req.files == "object") {
+
+    if (typeof req.files === "object") {
       images = Object.values(req.files);
     } else {
       images = req.files ? [...req.files] : [];
@@ -26,14 +26,16 @@ router.post(
       let srcObj = {
         src: `data:${file.mimetype};base64,${file.buffer.toString("base64")}`,
       };
-      fs.unlink(path.join("/upload/" + file.filename), () => {});
+      fs.unlink(path.join("upload/" + file.filename), () => {});
       return srcObj;
     });
 
-    const post = await Post.findByIdAndUpdate(
+    const post = await Post.findOneAndUpdate(
       { _id: id },
-      { $push: { images: { $each: imagesArray } } }
+      { $push: { images: { $each: imagesArray } } },
+      { new: true }
     );
+
     res.status(200).send(post);
   }
 );

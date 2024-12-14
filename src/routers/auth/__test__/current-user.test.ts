@@ -1,6 +1,5 @@
 import request from "supertest";
 import { app } from "../../../app";
-// import { cookie } from "express-validator";
 
 it("should return a currentUser property", async () => {
   const cookie = await global.signin();

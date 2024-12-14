@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { User } from "../../models/user";
-import { Authenticationservice, BadRequestError } from "../../../common";
+import { authenticationService, BadRequestError } from "../../../common";
 import jwt from "jsonwebtoken";
 
 const router = Router();
@@ -13,7 +13,7 @@ router.post(
     const user = await User.findOne({ email });
     if (!user) return next(new BadRequestError("wrong credentials"));
 
-    const isEqual = await Authenticationservice.Pwdcompare(
+    const isEqual = await authenticationService.pwdCompare(
       user.password,
       password
     );

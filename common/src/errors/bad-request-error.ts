@@ -1,7 +1,7 @@
-import { CustomError } from "./custom-errors";
+import { CustomError } from "./custom-error";
 
 export class BadRequestError extends CustomError {
-  statusCode: 400;
+  statusCode = 400;
   constructor(public message: string) {
     super(message);
   }
@@ -10,11 +10,3 @@ export class BadRequestError extends CustomError {
     return [{ message: this.message }];
   }
 }
-
-// next(new BadRequestError('wrong data'))
-
-//     (err)=> {
-//     if (err instanceof CustomError) {
-//         res.status(err.statusCode).send(err)
-//     }
-// }

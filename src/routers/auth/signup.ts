@@ -1,10 +1,8 @@
 import { Router, Request, Response, NextFunction } from "express";
 import { User } from "../../models/user";
 import jwt from "jsonwebtoken";
-import { BadRequestError } from "../../../common/src/errors/bad-request-error";
-import { validationRequest } from "../../../common/src/middlewares/validation-request";
-import { body, validationResult } from "express-validator";
-import { RequestValidationError } from "../../../common/src/errors/request-validation-error";
+import { BadRequestError, validationRequest } from "../../../common";
+import { body } from "express-validator";
 
 const router = Router();
 
@@ -15,13 +13,13 @@ router.post(
       .not()
       .isEmpty()
       .isEmail()
-      .withMessage("a valid email is required."),
+      .withMessage("a valid email is required"),
 
     body("password")
       .not()
       .isEmpty()
       .isLength({ min: 6 })
-      .withMessage("a valid password is required."),
+      .withMessage("a valid password is required"),
   ],
   validationRequest,
   async (req: Request, res: Response, next: NextFunction) => {

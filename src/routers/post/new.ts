@@ -1,9 +1,8 @@
 import { Router, Request, Response, NextFunction } from "express";
 import Post from "../../models/post";
 import { User } from "../../models/user";
-import { BadRequestError, uploadImages } from "../../../common/src";
+import { BadRequestError, uploadImages } from "../../../common/";
 import fs from "fs";
-// import { requireAuth } from "../../../common/src/middlewares/req-auth"
 import path from "path";
 
 const router = Router();
@@ -14,10 +13,11 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     const { title, content } = req.body;
 
-    if (!req.files) return next(new BadRequestError("images are required."));
+    if (!req.files) return next(new BadRequestError("images are required"));
 
     let images: Array<Express.Multer.File>;
-    if (typeof req.files == "object") {
+
+    if (typeof req.files === "object") {
       images = Object.values(req.files);
     } else {
       images = req.files ? [...req.files] : [];
@@ -34,7 +34,7 @@ router.post(
         let srcObj = {
           src: `data:${file.mimetype};base64,${file.buffer.toString("base64")}`,
         };
-        fs.unlink(path.join("/upload/" + file.filename), () => {});
+        fs.unlink(path.join("upload/" + file.filename), () => {});
         return srcObj;
       }),
     });
