@@ -1,10 +1,14 @@
-import { Router, Request, Response, NextFunction } from 'express'
-import { currentUser } from '../../../common/'
+import { Router, Request, Response, NextFunction } from "express";
+import { currentUser } from "../../../common/src";
 
-const router = Router()
+const router = Router();
 
-router.get('/current-user', currentUser, async (req: Request, res: Response, next: NextFunction) => {
-    res.status(200).send({ currentUser: req.currentUser })
-} )
+router.get(
+  "/current-user",
+  currentUser,
+  async (req: Request, res: Response, next: NextFunction) => {
+    res.status(200).send({ currentUser: req.currentUser });
+  }
+);
 
-export { router as currentUserRouter }
+export { router as currentUserRouter };
