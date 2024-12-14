@@ -1,29 +1,35 @@
-import { Router, Response, Request, NextFunction } from 'express'
-import Post from '../../models/post'
-import { User, UserDoc } from '../../models/user'
-import { BadRequestError } from '../../../common/'
+import { Router, Response, Request, NextFunction } from "express";
+import Post from "../../models/post";
+import { User, UserDoc } from "../../models/user";
+import { BadRequestError } from "../../../common/src";
 
-const router = Router()
+const router = Router();
 
-router.delete('/api/post/delete/:id', async (req: Request, res: Response, next: NextFunction) => {
+router.delete(
+  "/api/post/delete/:id",
+  async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
-    if(!id) {
-        return next(new BadRequestError('post id is required!'))
+    if (!id) {
+      return next(new BadRequestError("post id is required!"));
     }
 
     try {
-        await Post.findOneAndRemove({ _id: id })
-    } catch(err) {
-        next(new Error('post cannot be updated!'))
+      await Post.findOneAndRemove({ _id: id });
+    } catch (err) {
+      next(new Error("post cannot be updated!"));
     }
 
-    const user = await User.findOneAndUpdate({ _id: req.currentUser!.userId }, 
-        { $pull: { posts: id } }, { new: true })
+    const user = await User.findOneAndUpdate(
+      { _id: req.currentUser!.userId },
+      { $pull: { posts: id } },
+      { new: true }
+    );
 
-    if(!user) return next(new Error());
+    if (!user) return next(new Error());
 
-    res.status(200).send(user)
-})
+    res.status(200).send(user);
+  }
+);
 
-export { router as deletePostRouter }
+export { router as deletePostRouter };

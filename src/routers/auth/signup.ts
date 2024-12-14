@@ -25,12 +25,6 @@ router.post(
   ],
   validationRequest,
   async (req: Request, res: Response, next: NextFunction) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return next(new RequestValidationError(errors.array()));
-    }
-
     const { email, password } = req.body;
 
     const user = await User.findOne({ email });
